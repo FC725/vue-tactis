@@ -7,10 +7,10 @@
         </div>
         <div class="NavBar">
             <ul class="NavList">
-                <li style="width : 72px"><a href='/home'>Home</a></li>
-                <li style="width : 102px"><a href='/gameplay'>GamePlay</a></li>
-                <li style="width : 108px"><a href='/nft'>NFT Cards</a></li>
-                <li style="width : 114px"><a href="/tokenomics/tokenomics">Tokenomics</a></li>
+                <li style="width : 72px"><a v-on:click="goTo('home', 'home')">Home</a></li>
+                <li style="width : 102px"><a v-on:click="goTo('home', 'gameplay')">GamePlay</a></li>
+                <li style="width : 108px"><a v-on:click="goTo('home', 'nft')">NFT Cards</a></li>
+                <li style="width : 114px"><a v-on:click="goTo('Tokenomics', '')">Tokenomics</a></li>
                 <li style="width : 119px"><a href="/">Ambassador</a></li>
             </ul>
             
@@ -20,20 +20,20 @@
         <div class="MobileLogo">
             <img src="/images/landing/logo.png" alt='' />
         </div>
-        <div class="HamburgerBtn" >
-            <div class="CloseBox"></div>
-            <div class="HamburgerLine1"></div>
-            <div class="HamburgerLine2"></div>
-            <div class="HamburgerLine3"></div>
+        <div class="HamburgerBtn"  v-on:click="showHamburger()">
+            <div class="CloseBox" ref="_closeBtn"></div>
+            <div class="HamburgerLine1" ref="hamburgerLine1"></div>
+            <div class="HamburgerLine2" ref="hamburgerLine2"></div>
+            <div class="HamburgerLine3" ref="hamburgerLine3"></div>
         </div>
         
-        <div class="HamburgerBox">
+        <div class="HamburgerBox" ref="_NavBarRef">
             
             <div class="NavBarList">
-                <div style="height:39px"><a href='/home'>Home</a></div>
-                <div style="height:39px"><a href='/gameplay'>GamePlay</a></div>
-                <div style="height:39px"><a href='/nft'>NFT Cards</a></div>
-                <div style="height:39px"><a href='/tokenomics/tokenomics'>Tokenomics</a></div>
+                <div style="height:39px"><a v-on:click="goTo('home', 'home')">Home</a></div>
+                <div style="height:39px"><a v-on:click="goTo('home', 'gameplay')">GamePlay</a></div>
+                <div style="height:39px"><a v-on:click="goTo('home', 'nft')">NFT Cards</a></div>
+                <div style="height:39px"><a v-on:click="goTo('Tokenomics', '')">Tokenomics</a></div>
                 <div style="height:39px"><a href='/'>Ambassador</a></div>
                 <div class="NavTitleBox"><img src="/images/landing/NavbarPlayer.png" /></div>
                 <div class="OtherBox">
@@ -54,11 +54,53 @@
 
 <script>
 
+var _showNavBar    = false;
 export default {
-  name: 'Header',
-  components: {
-  }
+    name: 'Header',
+    components: {
+    },
+    methods: {
+        goTo : function(parent, child){
+            if(window.location.pathname.indexOf('home') != -1 && parent == 'home') {
+                document
+                    .getElementById(child)
+                    .scrollIntoView({ behavior: 'smooth' });
+            }else {
+                if(parent == 'Tokenomics')
+                {
+                    window.location.href = "/" + parent
+                } else {
+                    window.location.href = "/" + parent + "/" + child ;
+                }
+            }
+        },
+        showHamburger : function(){
+            // console.log(hamburgerLine1);
+            if(_showNavBar === false)
+            {
+                this.$refs["hamburgerLine1"].style.transform = "translateY(7px) rotate(135deg)";
+                this.$refs["hamburgerLine2"].style.display = "none";
+                this.$refs["hamburgerLine3"].style.transform = "translateY(-7px) rotate(45deg)";
+                this.$refs["_closeBtn"].style.transform = "rotate(0deg)";
+                this.$refs["_closeBtn"].style.opacity = "1";
+                // this.$refs["_NavBarRef"].style.animation = animations.fadeIn;
+                this.$refs["_NavBarRef"].style.display = 'block';
+
+            } else {
+                this.$refs["hamburgerLine1"].style.transform = "rotate(-45deg) translate(-7px,-3px)";
+                this.$refs["hamburgerLine2"].style.display = "block";
+                this.$refs["hamburgerLine3"].style.transform = "rotate(-45deg) translate(6px,2px)";
+                this.$refs["_closeBtn"].style.transform = "rotate(-45deg)";
+                this.$refs["_closeBtn"].style.opacity = "0";
+                this.$refs["_NavBarRef"].style.display = 'none';
+                
+            }
+                _showNavBar = !_showNavBar;
+        }
+    }
+  
 }
+
 </script>
 
 <style>
@@ -93,11 +135,12 @@ export default {
 
 .NavList {
     background-image : url('/images/landing/Loading_Bar 2.png');
-    background-size : cover ;
+    background-size : 100% 100% ;
     background-repeat : no-repeat;
     padding-top : 20px;
     cursor : pointer ;
     display : none ;
+    padding-left: 40px;
 }
 
 @media screen and (min-width : 980px) {

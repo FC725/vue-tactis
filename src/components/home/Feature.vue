@@ -42,6 +42,7 @@ export default {
 
 <style>
 @import './aos.css';
+
 .FeatureSection{
     background-color : #1A1A1A;
     padding-top : 50px; 

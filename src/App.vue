@@ -1,14 +1,16 @@
 <template>
-  <Home />
+<router-view/>
 </template>
 
 <script>
-import Home from './pages/Home.vue'
+// import Home from './pages/Home.vue'
+// import Tokenomics from './pages/Tokenomics.vue'
 
 export default {
   name: 'App',
   components: {
-    Home
+    // Home
+    // Tokenomics
   }
 }
 </script>
@@ -17,5 +19,6 @@ export default {
 body {
   margin: 0px;
   background-color: black;
+  overflow-x : hidden !important ;
 }
 </style>
